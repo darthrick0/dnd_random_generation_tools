@@ -1,4 +1,4 @@
-# dnd_random_generation_tools
+﻿# dnd_random_generation_tools
  An assortment of Excel tables and Python files to automate table rolls
 
 These utilities will use python and Excel tables to generate loot and perform other functions that I think are useful for Dungeon Masters. 
@@ -44,9 +44,17 @@ If you download this, I hope it serves you well. Feel free to message me with qu
 
 Project Notes:
 
+Required modules:
+Pandas
+Xlsx
+
+
+
+
 Hoard Treasure tables
 The Gem and Art object tables are expanded such that a single roll can be used. 
 
 Gem Table: Expanded to 24 rows instead of 12, 8, 6, and 4 entries. The entries for the tables duplicated, preserving the original probability.
 
 Art Object Table: Expanded to 40 rows instead of 10 and 8. The entries for the tables duplicated, preserving the original probability
+
