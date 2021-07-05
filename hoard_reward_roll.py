@@ -62,7 +62,7 @@ def read_coin_table_entry(row, column_list):
 num_rows_in_coin = len(hoard_table_coins_dataframe)
 coin_row = hoard_table_coins_dataframe.loc[CR]
 
-
+#==
 num_rows_in_hoard = len(hoard_table_dataframe)
 roll_for_hoard_row = roll_XdY_timesZ(1,num_rows_in_hoard,1)
 print('hoard random roll is: ' + str(roll_for_hoard_row))
