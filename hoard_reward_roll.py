@@ -62,77 +62,97 @@ def read_coin_table_entry(row, column_list):
 
 
 #--------------------------------------------------------
-def read_hoard_table(row, column_list):
-    for x in range(len(row)):
-        if isinstance(row.get(x), str):
-            # print(coin_row.get(x) + ' ' + column_list[x])
-            # print(type(column_list[x]))
-            if 'Art Object' in column_list[x]:
-                print('Art Object Found')
-            if 'Gems' in column_list[x]:
-                print('Gems Found')
-                # print(row.get(x))
-                # print(type(column_list[x]))
-                gem_entry_interpreter(row.get(x))
-            if 'Magic Items' in column_list[x]:
-                print('Magic Item Table Found')
+def magic_item_entry_interpreter(entry):
+    print('Magic Item Table Found')
+    reward_list = []
+    number_of_dice = entry[0:entry.find('d')]
+    dice_type = entry[entry.find('d')+1:entry.find('x')]
+    total = roll_XdY_timesZ(number_of_dice, dice_type, 1)
+    table = entry[entry.find('x')+1:len(entry)]
+    print(table)
+    magic_item_table_dataframe = pandas.read_excel('magic_item_tables.xlsx', sheet_name=table, index_col = 'Roll')
+    print(magic_item_table_dataframe)
+    number_of_rows = len(magic_item_table_dataframe.index)
+    table_value_columns = magic_item_table_dataframe.columns.values.tolist()
+
+    # current implementation is hard coded to look at a single column
+    for i in range(total):
+        roll = roll_XdY_timesZ(1, number_of_rows, 1)
+        reward_list.append(magic_item_table_dataframe.iloc[roll-1,0])
+
+    # The following code could be used to condense the magic item tables rolling into one sheet or to add descriptions for each magic item.
+    # Adding descriptions would be laborious right now and I dont feel like doing it.
+    # for i in range(total):
+    #     for j in range(len(table_value_columns)):
+    #         if table == str(table_value_columns[j]):
+    #             roll = roll_XdY_timesZ(1, number_of_rows, 1)
+    #             reward_list.append(magic_item_table_dataframe.iloc[roll-1, j])
+
+
+    print('Magic Items:')
+    for magic_item in reward_list:
+        print(magic_item)
 
 def gem_entry_interpreter(entry):
-    print('GEM INTERPRETER CALLED')
+    # print('Gems Found')
     reward_list = []
     number_of_dice = entry[0:entry.find('d')]
     dice_type = entry[entry.find('d')+1:entry.find('x')]
     total = roll_XdY_timesZ(number_of_dice, dice_type, 1)
     type_of_gem = entry[entry.find('x')+1:len(entry)]
-    # print(type_of_gem)
-    # print(type(type_of_gem))
+
     gem_dataframe = pandas.read_excel('individual_items.xlsx', sheet_name='Gems', index_col = 'Roll')
     number_of_rows = len(gem_dataframe.index)
-    # print(number_of_dice + 'd' + dice_type + 'x' + type_of_gem)
-    # print('column data type: ' + type(entry.columns(1)))
     gem_value_columns = gem_dataframe.columns.values.tolist()
-    # print(total)
-    # print(gem_value_columns)
-    # print('number of columns: ' + str(len(gem_value_columns)))
-    # # print(type(gem_value_columns))
-    # print('total number of rolls: ' + str(total))
-
-
     for i in range(total):
         for j in range(len(gem_value_columns)):
-            # print(j)
-            # print('inside j')
-            # print('gem_value_columns[j] = ' + str(gem_value_columns[j]) + ', type of gem is: ' + type_of_gem)
             if type_of_gem == str(gem_value_columns[j]):
-                # print('inside if`')
                 roll = roll_XdY_timesZ(1, number_of_rows, 1)
-                # print('Roll Occured')
-                # print(roll)
-                # print('j = ' + str(j))
-                # print(gem_dataframe.iloc[roll-1, j])
                 reward_list.append(gem_dataframe.iloc[roll-1, j])
-                # print(reward_list)
+
+    print('Gem Value: ' + type_of_gem + ' gp')
     reward_dict = Counter(reward_list)
     for gem in reward_dict:
         print(str(reward_dict[gem]) + ' x ' + gem)
 
-
-
 def art_object_entry_interpreter(entry):
-    # number_of_dice = entry[0:entry.find('d')]
-    # dice_type = entry[entry.find('d')+1:entry.find('x')]
-    # table = entry[entry.find('Table')+1:len(entry)]
-    # total = roll_XdY_timesZ(number_of_dice, dice_type, 1)
-    # return total
-    print('art object function called')
+    print('Art Object Found')
+    reward_list = []
+    number_of_dice = entry[0:entry.find('d')]
+    dice_type = entry[entry.find('d')+1:entry.find('x')]
+    type_of_art_object = entry[entry.find('x')+1:len(entry)]
+    print('dice: ' + number_of_dice + 'd' + dice_type  + 'x' +  type_of_art_object)
+    total = roll_XdY_timesZ(number_of_dice, dice_type, 1)
 
-def magic_item_entry_interpreter(entry):
-    # number_of_dice = entry[0:entry.find('d')]
-    # dice_type = entry[entry.find('d')+1:entry.find('x')]
-    # type = entry[entry.find('x')+1:len(entry)]
-    # total = roll_XdY_timesZ(number_of_dice, dice_type, 1)
-    # return total
-    print('magic item function called')
+    type_of_art_object = entry[entry.find('x')+1:len(entry)]
+    # print('art_object type: ' + str(type_of_art_object))
+    # print('number of rolls: ' + str(total))
+    art_object_dataframe = pandas.read_excel('individual_items.xlsx', sheet_name='Art Objects', index_col = 'Roll')
+    number_of_rows = len(art_object_dataframe.index)
+    art_object_value_columns = art_object_dataframe.columns.values.tolist()
+    for i in range(total):
+        for j in range(len(art_object_value_columns)):
+            if type_of_art_object == str(art_object_value_columns[j]):
+                roll = roll_XdY_timesZ(1, number_of_rows, 1)
+                reward_list.append(art_object_dataframe.iloc[roll-1, j])
+
+    print('Art Object Value: ' + type_of_art_object + ' gp')
+    reward_dict = Counter(reward_list)
+    for art_object in reward_dict:
+        print(str(reward_dict[art_object]) + ' x ' + art_object)
+
+
+def read_hoard_table(row, column_list):
+    for x in range(len(row)):
+        if isinstance(row.get(x), str):
+            if 'Art Object' in column_list[x]:
+                art_object_entry_interpreter(row.get(x))
+            if 'Gems' in column_list[x]:
+                gem_entry_interpreter(row.get(x))
+            if 'Magic Items' in column_list[x]:
+                magic_item_entry_interpreter(row.get(x))
+
+
 #--------------------------------------------------------
 
 

@@ -7,38 +7,37 @@ It is my intent to expand this toolset to perform a variety of functions listed 
 
 If you download this, I hope it serves you well. Feel free to message me with questions or if you want contribute to the project. If you want to use the content here, I request you credit myself and provide a link to the repository.
 
---------
+----
 
-----------
+------
 
-
-
-Project Notes:
+### Project Notes:
 
 -------------
 
 Required modules:
-Pandas
+
+- Pandas
 
 ----------------------------
-
-Hoard Treasure tables:
-The Gem and Art object tables are expanded such that a single roll can be used. 
-
-Gem Table: Expanded to 120 rows instead of  4, 6, 8, 10, and 12 entries. The entries for the tables duplicated, preserving the original probability.
-
-Art Object Table: Expanded to 40 rows instead of 10 and 8. The entries for the tables duplicated, preserving the original probability
-
----------------------
 
 Code Notes:
 
-gem_entry_interpreter function in hoard_reward_roll.py: I tried to keep out of the strictly number based indexing of columns for readability's sake, but this one merited using index based searches. 
+- gem_entry_interpreter function in hoard_reward_roll.py: I tried to keep out of the strictly number based indexing of columns for readability's sake, but this one merited using index based searches. 
 
+- Magic Tables are currently hardcoded to search only one column. Adding multiple columns for either descriptions or to condense number of sheets should be easily achieved though.
 
 
 ----------------------------
 
-Notes on expanding tables:
+Tables:
 
-the gem and art object tables are dependent on having the same number of entries in each column. It is fine if you change up entries in the tables or add rows, but if you are going to change the number of entries and add rows, ensure they match the current number of rows in the respective table. If necessary determine the least common denominator if you would like to use a different roll (d3 or d7...)
+- Hoard Treasure tables: The Gem and Art object tables are expanded such that a single roll can be used. 
+- Gem Table: Expanded to 120 rows instead of  4, 6, 8, 10, and 12 entries. The entries for the tables duplicated, preserving the original probability.
+- Art Object Table: Expanded to 40 rows instead of 10 and 8. The entries for the tables duplicated, preserving the original probability
+
+Notes on Modifying Tables:
+
+- The current implementation of searching tables is based on file/workbook and sheet name. In order to change a sheet name, you need to update the code as well. 
+- The gem and art object tables are dependent on having the same number of entries in each column. It is fine if you change up entries in the tables or add rows, but if you are going to change the number of entries and add rows, ensure they match the current number of rows in the respective table. If necessary, determine the least common denominator if you would like to use a different roll (d3 or d7...)
+
