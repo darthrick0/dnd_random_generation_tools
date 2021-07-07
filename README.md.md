@@ -12,40 +12,12 @@ If you download this, I hope it serves you well. Feel free to message me with qu
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Project Notes:
 
 Required modules:
 Pandas
 
-
+----------------------------
 
 Hoard Treasure tables:
 The Gem and Art object tables are expanded such that a single roll can be used. 
@@ -54,7 +26,7 @@ Gem Table: Expanded to 120 rows instead of  4, 6, 8, 10, and 12 entries. The ent
 
 Art Object Table: Expanded to 40 rows instead of 10 and 8. The entries for the tables duplicated, preserving the original probability
 
-
+---------------------
 
 Code Notes:
 
@@ -62,7 +34,7 @@ gem_entry_interpreter function in hoard_reward_roll.py: I tried to keep out of t
 
 
 
-
+----------------------------
 
 Notes on expanding tables:
 
