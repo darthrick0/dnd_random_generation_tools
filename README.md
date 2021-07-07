@@ -7,12 +7,9 @@ It is my intent to expand this toolset to perform a variety of functions listed 
 
 If you download this, I hope it serves you well. Feel free to message me with questions or if you want contribute to the project. If you want to use the content here, I request you credit myself and provide a link to the repository.
 
---------------------------------------------
+Project Notes
 
-
-
-
-Project Notes:
+-------------
 
 Required modules:
 Pandas
