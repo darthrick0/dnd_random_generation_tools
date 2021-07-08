@@ -58,43 +58,57 @@ def read_coin_table_entry(row, column_list):
             # print(coin_row.get(x) + ' ' + column_list[x])
             print('total = ' + str(coin_interpreter(row.get(x))) + ' ' + column_list[x])
 #--------------------------------------------------------
-
-
-
-#--------------------------------------------------------
 def magic_item_entry_interpreter(entry):
-    print('Magic Item Table Found')
     reward_list = []
     number_of_dice = entry[0:entry.find('d')]
     dice_type = entry[entry.find('d')+1:entry.find('x')]
     total = roll_XdY_timesZ(number_of_dice, dice_type, 1)
     table = entry[entry.find('x')+1:len(entry)]
-    print(table)
     magic_item_table_dataframe = pandas.read_excel('magic_item_tables.xlsx', sheet_name=table, index_col = 'Roll')
-    print(magic_item_table_dataframe)
     number_of_rows = len(magic_item_table_dataframe.index)
     table_value_columns = magic_item_table_dataframe.columns.values.tolist()
-
     # current implementation is hard coded to look at a single column
     for i in range(total):
         roll = roll_XdY_timesZ(1, number_of_rows, 1)
-        reward_list.append(magic_item_table_dataframe.iloc[roll-1,0])
+        # roll = 13
+        choosy_armor_list = ['Armor, +1', 'Armor, +2', 'Armor, +3']
+        choosy_weapon_list = ['Weapon, +1', 'Weapon, +2', 'Weapon, +3']
+        reward = magic_item_table_dataframe.iloc[roll-1,0]
+        # turns vanila +X Weapons into specific weapons
+        if reward in choosy_weapon_list:
+            weapon_dataframe = pandas.read_excel('individual_items.xlsx', sheet_name='Weapons', index_col = 'Roll')
+            roll_for_weapon = roll_XdY_timesZ(1, len(weapon_dataframe.index), 1)
+            reward = reward.replace('Weapon', weapon_dataframe.iloc[roll_for_weapon-1, 0])
+        # turns vanila armor into specific armor
+        for armor in choosy_armor_list:
+            if reward == armor:
+                armor_dataframe = pandas.read_excel('individual_items.xlsx', sheet_name='Armor', index_col = 'Roll')
+                roll_for_armor = roll_XdY_timesZ(1, len(armor_dataframe.index), 1)
+                reward = armor + '' + weapon_dataframe.iloc[roll_for_armor-1, 0]
+        # rolls for figurine of wonderous power
+        if 'Figurine of wondrous power (roll 1d8)' == reward:
+            figurine_dataframe = pandas.read_excel('individual_items.xlsx', sheet_name='Figurine of Wondrous Power', index_col = 'Roll')
+            roll_for_figurine = roll_XdY_timesZ(1, len(figurine_dataframe.index), 1)
+            reward = 'Figurine of Wondrous Power: ' + figurine_dataframe.iloc[roll_for_figurine-1, 0]
+        # gets spell of correct level for a spell scroll
+        if 'Level' in reward:
+            spell_level = reward[reward.find('(')+1:reward.find(')')]
+            spell_dataframe = pandas.read_excel('spells.xlsx', sheet_name=spell_level, index_col = 'Roll')
+            roll_for_spell = roll_XdY_timesZ(1, len(spell_dataframe.index), 1)
+            reward = spell_level + ' Spell Scroll of ' + spell_dataframe.iloc[roll_for_spell-1, 0]
+        reward_list.append(reward)
 
-    # The following code could be used to condense the magic item tables rolling into one sheet or to add descriptions for each magic item.
-    # Adding descriptions would be laborious right now and I dont feel like doing it.
+    # Something similar to the following code could be used to condense the magic item tables rolling into one sheet or to add descriptions for each magic item.
     # for i in range(total):
     #     for j in range(len(table_value_columns)):
     #         if table == str(table_value_columns[j]):
     #             roll = roll_XdY_timesZ(1, number_of_rows, 1)
     #             reward_list.append(magic_item_table_dataframe.iloc[roll-1, j])
 
-
-    print('Magic Items:')
     for magic_item in reward_list:
         print(magic_item)
 
 def gem_entry_interpreter(entry):
-    # print('Gems Found')
     reward_list = []
     number_of_dice = entry[0:entry.find('d')]
     dice_type = entry[entry.find('d')+1:entry.find('x')]
@@ -116,17 +130,13 @@ def gem_entry_interpreter(entry):
         print(str(reward_dict[gem]) + ' x ' + gem)
 
 def art_object_entry_interpreter(entry):
-    print('Art Object Found')
     reward_list = []
     number_of_dice = entry[0:entry.find('d')]
     dice_type = entry[entry.find('d')+1:entry.find('x')]
     type_of_art_object = entry[entry.find('x')+1:len(entry)]
-    print('dice: ' + number_of_dice + 'd' + dice_type  + 'x' +  type_of_art_object)
     total = roll_XdY_timesZ(number_of_dice, dice_type, 1)
 
     type_of_art_object = entry[entry.find('x')+1:len(entry)]
-    # print('art_object type: ' + str(type_of_art_object))
-    # print('number of rolls: ' + str(total))
     art_object_dataframe = pandas.read_excel('individual_items.xlsx', sheet_name='Art Objects', index_col = 'Roll')
     number_of_rows = len(art_object_dataframe.index)
     art_object_value_columns = art_object_dataframe.columns.values.tolist()
@@ -143,13 +153,20 @@ def art_object_entry_interpreter(entry):
 
 
 def read_hoard_table(row, column_list):
+    print(row)
+    no_repeat = True
     for x in range(len(row)):
         if isinstance(row.get(x), str):
             if 'Art Object' in column_list[x]:
                 art_object_entry_interpreter(row.get(x))
+                print('-------')
             if 'Gems' in column_list[x]:
                 gem_entry_interpreter(row.get(x))
+                print('-------')
             if 'Magic Items' in column_list[x]:
+                if no_repeat:
+                    print('Magic Items:')
+                    no_repeat = False
                 magic_item_entry_interpreter(row.get(x))
 
 
@@ -159,9 +176,9 @@ def read_hoard_table(row, column_list):
 num_rows_in_coin = len(hoard_table_coins_dataframe)
 coin_row = hoard_table_coins_dataframe.loc[CR]
 
-#==
 num_rows_in_hoard = len(hoard_table_dataframe)
 roll_for_hoard_row = roll_XdY_timesZ(1,num_rows_in_hoard,1)
+# roll_for_hoard_row = 79
 print('hoard random roll is: ' + str(roll_for_hoard_row))
 item_row = hoard_table_dataframe.loc[roll_for_hoard_row]
 
