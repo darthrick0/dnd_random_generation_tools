@@ -33,11 +33,12 @@ else:
 #--------------------------------------------------------
 def roll_XdY_timesZ(x, y, z):
     total = 0
-    for i in range(int(x)):
-        dice_roll = random.randint(1,int(y))
+    x, y, z = int(x), int(y), int(z)
+    for i in range(x):
+        dice_roll = random.randint(1,y)
         # print("roll in xdy*z = " + str(dice_roll))
         total += dice_roll
-    total = total * int(z)
+    total = total * z
     #error check
     # min_check = x * z
     # max_check = x * y * z
@@ -75,6 +76,10 @@ def magic_item_entry_interpreter(entry):
         choosy_weapon_list = ['Weapon, +1', 'Weapon, +2', 'Weapon, +3']
         reward = magic_item_table_dataframe.iloc[roll-1,0]
         # turns vanila +X Weapons into specific weapons
+        if reward == 'Magic armor (roll 1d12)':
+            magic_armor_dataframe = pandas.read_excel('individual_items.xlsx', sheet_name='Magic Armor Roll', index_col = 'Roll')
+            roll_for_magic_armor = roll_XdY_timesZ(1, len(magic_armor_dataframe.index), 1)
+            reward = magic_armor_dataframe.iloc[roll_for_magic_armor-1, 0]
         if reward in choosy_weapon_list:
             weapon_dataframe = pandas.read_excel('individual_items.xlsx', sheet_name='Weapons', index_col = 'Roll')
             roll_for_weapon = roll_XdY_timesZ(1, len(weapon_dataframe.index), 1)
@@ -153,7 +158,7 @@ def art_object_entry_interpreter(entry):
 
 
 def read_hoard_table(row, column_list):
-    print(row)
+    # print(row)
     no_repeat = True
     for x in range(len(row)):
         if isinstance(row.get(x), str):
@@ -172,6 +177,7 @@ def read_hoard_table(row, column_list):
 
 #--------------------------------------------------------
 
+roll_XdY_timesZ('-1','2','1')
 
 num_rows_in_coin = len(hoard_table_coins_dataframe)
 coin_row = hoard_table_coins_dataframe.loc[CR]
