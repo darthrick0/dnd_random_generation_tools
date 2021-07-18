@@ -19,6 +19,12 @@ Required modules:
 
 - Pandas
 
+For Testing
+
+- excel2json
+
+
+
 ----------------------------
 
 Code Notes:
