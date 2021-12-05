@@ -8,7 +8,7 @@ from collections import Counter
 
 
 parser = argparse.ArgumentParser(description='Enter Challenge Rating and recieve rolled rewards')
-parser.add_argument('CR', help='Enter and integer greater than or equal to 1', type=int)
+parser.add_argument('CR', help='Enter an integer greater than or equal to 1', type=int)
 args = parser.parse_args()
 # print(args.CR)
 
@@ -17,6 +17,7 @@ if CR < 1:
     raise ValueError('Challenge Rating must be greater than or equal to 1')
 
 hoard_table_coins_dataframe = pandas.read_excel('treasure_hoard_tables.xlsx', sheet_name='Coins', index_col='CR')
+
 if CR <=4:
     hoard_table_dataframe = pandas.read_excel('treasure_hoard_tables.xlsx', sheet_name='CR 1-4', index_col='Roll')
 elif CR <= 10:
@@ -121,12 +122,12 @@ def gem_entry_interpreter(entry):
     type_of_gem = entry[entry.find('x')+1:len(entry)]
 
     gem_dataframe = pandas.read_excel('individual_items.xlsx', sheet_name='Gems', index_col = 'Roll')
-    number_of_rows = len(gem_dataframe.index)
+    # number_of_rows = len(gem_dataframe.index)
     gem_value_columns = gem_dataframe.columns.values.tolist()
     for i in range(total):
         for j in range(len(gem_value_columns)):
             if type_of_gem == str(gem_value_columns[j]):
-                roll = roll_XdY_timesZ(1, number_of_rows, 1)
+                roll = roll_XdY_timesZ(1, len(gem_value_columns)-1, 1)
                 reward_list.append(gem_dataframe.iloc[roll-1, j])
 
     print('Gem Value: ' + type_of_gem + ' gp')
@@ -143,12 +144,12 @@ def art_object_entry_interpreter(entry):
 
     type_of_art_object = entry[entry.find('x')+1:len(entry)]
     art_object_dataframe = pandas.read_excel('individual_items.xlsx', sheet_name='Art Objects', index_col = 'Roll')
-    number_of_rows = len(art_object_dataframe.index)
+    # number_of_rows = len(art_object_dataframe.index)
     art_object_value_columns = art_object_dataframe.columns.values.tolist()
     for i in range(total):
         for j in range(len(art_object_value_columns)):
             if type_of_art_object == str(art_object_value_columns[j]):
-                roll = roll_XdY_timesZ(1, number_of_rows, 1)
+                roll = roll_XdY_timesZ(1, len(art_object_value_columns) -1, 1)
                 reward_list.append(art_object_dataframe.iloc[roll-1, j])
 
     print('Art Object Value: ' + type_of_art_object + ' gp')
@@ -177,15 +178,11 @@ def read_hoard_table(row, column_list):
 
 #--------------------------------------------------------
 
-roll_XdY_timesZ('-1','2','1')
-
-num_rows_in_coin = len(hoard_table_coins_dataframe)
-coin_row = hoard_table_coins_dataframe.loc[CR]
 
 num_rows_in_hoard = len(hoard_table_dataframe)
 roll_for_hoard_row = roll_XdY_timesZ(1,num_rows_in_hoard,1)
 # roll_for_hoard_row = 79
-print('hoard random roll is: ' + str(roll_for_hoard_row))
+# print('hoard random roll is: ' + str(roll_for_hoard_row))
 item_row = hoard_table_dataframe.loc[roll_for_hoard_row]
 
 # print(item_row)
@@ -193,6 +190,8 @@ hoard_column_list = hoard_table_dataframe.columns.values.tolist()
 read_hoard_table(item_row, hoard_column_list)
 print('-------')
 
+num_rows_in_coin = len(hoard_table_coins_dataframe)
+coin_row = hoard_table_coins_dataframe.loc[CR]
 # print(coin_row)
 coin_column_list = hoard_table_coins_dataframe.columns.values.tolist()
 read_coin_table_entry(coin_row, coin_column_list)

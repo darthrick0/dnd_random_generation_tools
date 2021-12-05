@@ -1,0 +1,30 @@
+{
+    "Roll":{
+        "0":1,
+        "1":2,
+        "2":3,
+        "3":4,
+        "4":5,
+        "5":6,
+        "6":7,
+        "7":8,
+        "8":9,
+        "9":10,
+        "10":11,
+        "11":12
+    },
+    "Armor":{
+        "0":"Armor, +2 half plate",
+        "1":"Armor, +2 half plate",
+        "2":"Armor, +2 plate",
+        "3":"Armor, +2 plate",
+        "4":"Armor, +3 studded leather",
+        "5":"Armor, +3 studded leather",
+        "6":"Armor, +3 breastplate",
+        "7":"Armor, +3 breastplate",
+        "8":"Armor, +3 splint",
+        "9":"Armor, +3 splint",
+        "10":"Armor, +3 half plate",
+        "11":"Armor, +3 plate"
+    }
+}

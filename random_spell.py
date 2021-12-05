@@ -2,9 +2,6 @@ import random
 import pandas
 import argparse
 import sys
-# example_excel = pandas.ExcelFile('spells.xlsx')
-# print(example_excel)
-# print(type(example_excel))
 
 parser = argparse.ArgumentParser(description='Enter spell level (0-9) or provide no arguments to roll random spell')
 parser.add_argument('-level', '--level', help='Enter spell level as an integer between 0 - 9, if left blank spell, a random spell of any level will be returned', type=int)
@@ -17,11 +14,7 @@ def roll_XdY_timesZ(x, y, z):
         # print("roll in xdy*z = " + str(dice_roll))
         total += dice_roll
     total = total * int(z)
-    #error check
-    # min_check = x * z
-    # max_check = x * y * z
-    # if min_check > total > max_check:
-    #     total = -1
+
     return total
 
 if not args.level and args.level != 0:
@@ -34,10 +27,8 @@ if not args.level and args.level != 0:
         print(x)
         spell_list.append(pandas.read_excel('spells.xlsx', sheet_name=x, index_col='Roll'))
         # individual_df =
-
-    # print(spell_list)
     spell_dataframe = pandas.concat(spell_list, ignore_index=True)
-    # print(spell_dataframe)
+
 elif 0 <= args.level <= 9:
     if args.level == 0:
         level_string = 'Cantrip'

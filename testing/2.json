@@ -1,0 +1,54 @@
+{
+    "Roll":{
+        "0":1,
+        "1":2,
+        "2":3,
+        "3":4,
+        "4":5,
+        "5":6,
+        "6":7,
+        "7":8,
+        "8":9,
+        "9":10,
+        "10":11
+    },
+    "Ammunition ":{
+        "0":"Javelin",
+        "1":"Dart",
+        "2":"Arrows (20)",
+        "3":"Blowgun needles (50)",
+        "4":"Crossbow bolts (20)",
+        "5":"Sling bullets (20)",
+        "6":"Dagger",
+        "7":"Hand Axe",
+        "8":"Light Hammer",
+        "9":"Trident",
+        "10":"Net"
+    },
+    "Unnamed: 2":{
+        "0":null,
+        "1":null,
+        "2":null,
+        "3":null,
+        "4":null,
+        "5":null,
+        "6":null,
+        "7":null,
+        "8":null,
+        "9":null,
+        "10":null
+    },
+    "Unnamed: 3":{
+        "0":null,
+        "1":null,
+        "2":null,
+        "3":null,
+        "4":null,
+        "5":null,
+        "6":null,
+        "7":null,
+        "8":null,
+        "9":null,
+        "10":null
+    }
+}

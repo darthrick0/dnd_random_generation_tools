@@ -1,0 +1,67 @@
+{
+    "Roll":{
+        "0":1,
+        "1":2,
+        "2":3,
+        "3":4,
+        "4":5,
+        "5":6,
+        "6":7,
+        "7":8,
+        "8":9,
+        "9":10,
+        "10":11
+    },
+    "Armor":{
+        "0":"\u00a0Padded",
+        "1":"Leather",
+        "2":"Studded leather",
+        "3":"Hide",
+        "4":"Chain shirt",
+        "5":"Scale mail",
+        "6":"Breastplate",
+        "7":"Half plate",
+        "8":"Chain mail",
+        "9":"Splint",
+        "10":"Plate"
+    },
+    "Unnamed: 2":{
+        "0":null,
+        "1":null,
+        "2":null,
+        "3":null,
+        "4":null,
+        "5":null,
+        "6":null,
+        "7":null,
+        "8":null,
+        "9":null,
+        "10":null
+    },
+    "Unnamed: 3":{
+        "0":null,
+        "1":null,
+        "2":null,
+        "3":null,
+        "4":null,
+        "5":null,
+        "6":null,
+        "7":null,
+        "8":null,
+        "9":null,
+        "10":null
+    },
+    "Unnamed: 4":{
+        "0":null,
+        "1":null,
+        "2":null,
+        "3":null,
+        "4":null,
+        "5":null,
+        "6":null,
+        "7":null,
+        "8":null,
+        "9":null,
+        "10":null
+    }
+}

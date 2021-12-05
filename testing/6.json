@@ -1,0 +1,32 @@
+{
+    "Roll":{
+        "0":1,
+        "1":2,
+        "2":3,
+        "3":4,
+        "4":5,
+        "5":6,
+        "6":7,
+        "7":8
+    },
+    "Figurine of Wondrous Power":{
+        "0":"Bronze griffon",
+        "1":"Ebony fly",
+        "2":"Golden lions",
+        "3":"Ivory goats",
+        "4":"Marble elephant",
+        "5":"Onyx dog",
+        "6":"Onyx dog",
+        "7":"Serpentine owl"
+    },
+    "Unnamed: 2":{
+        "0":null,
+        "1":null,
+        "2":null,
+        "3":null,
+        "4":null,
+        "5":null,
+        "6":null,
+        "7":null
+    }
+}
